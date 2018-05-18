@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/auth-routes');
+const profileRoutes = require('./routes/profile-routes');
 const passportConfig = require('./config/passport-setup');
 const passport = require('passport');
 const cookieSession = require('cookie-session');
@@ -22,9 +23,10 @@ mongoose.connect('mongodb://localhost/nodeOauth_test', () => {
 
 //set up routes
 app.use('/auth', authRoutes);
+app.use('/profile', profileRoutes);
 // create home route
 app.get('/', (req, res) => {
-   res.render('home');
+   res.render('home', { user: req.user });
 });
 // port
 const PORT = process.env.port || 4000;
